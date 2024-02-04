@@ -22,12 +22,13 @@ describe("User Endpoint", () => {
             expect(response.body.user.role).toEqual('USER')
         })
 
+
         it("will return 400 if one of the required fields is missing", async () => {
             const response = await supertest(app).post("/users").send({})
-
             expect(response.status).toEqual(400)
             expect(response.body).toHaveProperty('error')
         })
+
 
         it("will return 409 when attemping to register a customer with an in-use username", async () => {
             const request = {
@@ -45,6 +46,7 @@ describe("User Endpoint", () => {
             expect(response.body).toHaveProperty('error')
         })
     })
+
 
     describe("GET /users", () => {
         it("should let admins get a list of users", async () => {

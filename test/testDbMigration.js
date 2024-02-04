@@ -13,3 +13,5 @@ try {
   console.error(`Migration failed! \r\n ${err}`)
   process.exit()
 }
+
+

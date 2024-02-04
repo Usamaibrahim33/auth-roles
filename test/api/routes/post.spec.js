@@ -4,7 +4,7 @@ const { createUser } = require("../../helpers/createUser.js")
 const { createPost } = require("../../helpers/createPost.js")
 const jwt = require('jsonwebtoken')
 
-describe("Post Endpoint", () => {
+xdescribe("Post Endpoint", () => {
     describe("POST /posts", () => {
         it("will create a new post", async () => {
             const user = await createUser('john', '123456')

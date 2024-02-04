@@ -1,10 +1,15 @@
 const { PrismaClientKnownRequestError } = require("@prisma/client")
-const { createPostDb } = require('../domains/post.js')
+const { 
+   createPostDb,
+   deletePostDb 
+  } = require('../domains/post.js')
+const prisma = require("../utils/prisma.js")
 
 const createPost = async (req, res) => {
+  const userId = req.user.id
+  console.log(req.user)
   const {
     title,
-    userId
   } = req.body
 
   if (!title || !userId) {
@@ -28,6 +33,32 @@ const createPost = async (req, res) => {
   }
 }
 
+const deletePost = async (req, res) => {
+  try {
+    console.log('this is the controller');
+    const id = Number(req.params.id);
+    console.log(id);
+    const deletedPost = await deletePostDb(id);
+
+    if (!deletedPost) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    console.log(deletedPost);
+    return res.status(200).json({ post: deletedPost });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal server error, try again later!' });
+  }
+};
+
+
+
+
+
+
+
 module.exports = {
-  createPost
+  createPost,
+  deletePost,
 }

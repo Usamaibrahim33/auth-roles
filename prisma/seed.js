@@ -3,6 +3,8 @@ const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const { faker } = require('@faker-js/faker');
 
+
+// creating of  the seed!
 async function seed() {
   const users = []
 
@@ -11,10 +13,17 @@ async function seed() {
     users.push(user)
   }
 
+
+
+  const adminUser = await createUser(faker.internet.userName(), 'admin', role = "ADMIN")
+
   process.exit(0)
 }
 
-async function createUser(username, password) {
+
+
+// this is the creating of new user fucntion
+async function createUser(username, password, role = 'USER') {
   const posts = []
 
   for (let i = 0; i < username.length; i++) {
@@ -25,6 +34,7 @@ async function createUser(username, password) {
     data: {
       username,
       passwordHash: await bcrypt.hash(password, 6),
+      role: role,
       posts: {
         create: posts
       }
@@ -34,9 +44,9 @@ async function createUser(username, password) {
     }
   })
 
-  console.log('User created', user)
+  console.log('User created', user);
 
-  return user
+  return user;
 }
 
 seed()
